@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -12,12 +13,37 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
+		if ( !$request->exists("offset") )
+		{
+			$offset = 0;
+		}
+		else
+		{
+			$offset = $request->offset;
+		}
         $posts = Post::with([
 			"user",
 	        "comments" => function($query){
 		        $query->with(["user"]);
             },
-	        "medias"])->paginate(15);
+	        "medias"])
+	        ->skip($offset)
+	        ->take(15)
+	        ->get();
+
+		if ( Auth::check() ) {
+			$posts->each(function ($post){
+				$liked_by_me = $post->likes
+										->map(function ($like){ return $like->user_id; })
+										->search(function ($user_id){
+											return Auth::user()->id == $user_id;
+										}, $strict = true);
+				$post["liked_by_me"] = boolval($liked_by_me);
+			});
+		} else {
+			$post["liked_by_me"] = false;
+		}
+
 		return [
 			"posts" => $posts
 		];

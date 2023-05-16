@@ -1,0 +1,95 @@
+.container {
+	overflow: auto!important;
+}
+.navbar {
+	position: sticky;
+	top: 0px;
+	z-index: 3333;
+}
+#user-page-container {
+	width: 70%;
+	height: 100vh;
+	border: 1px solid orange;
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+	padding: 10px;
+	margin-top: 1em;
+}
+
+
+#user-page-thumb img {
+	width: 50%;
+	overflow: hidden;
+	border-radius: 50%;
+	border: 10px solid white;
+	outline: 1px solid #aaa;
+	display: inline-block;
+}
+#user-page-thumb {
+	width: 40%;
+	text-align: center;
+}
+#user-page-info {
+	width: 60%;
+}
+#user-page-details {
+	display: flex;
+	padding: 10px;
+	border-bottom: 1px solid #aaa;
+}
+.separator-dot {
+	font-size: .2em;
+	color: #1a1a1a;
+	margin: 0 5px;
+}
+#user-page-info-post {
+	margin: 0 5px;
+	color: black;
+}
+#user-page-info-comments{
+	margin: 0 5px;
+	color: black;
+}
+#user-page-info-likes {
+	margin: 0 5px;
+	color: black;
+}
+
+#user-page-container-post {
+	padding: 0px;
+	text-align: center;
+}
+#user-page-container-post  h4{
+	margin: 0px;
+	padding: 10px 17px;
+	background: black;
+	color: white;
+	display: inline-block;
+	font-size: small;
+	font-weight: normal;
+	border-radius: 3px;
+	font-family: ubuntu;
+}
+#user-page-container-post-posts {
+
+}
+
+#user-page-container-post-posts {
+
+}
+#user-page-container-post-posts-item {
+	width: 300px;
+	height: 300px;
+	display: inline-block;
+	border-radius: 5px;
+	overflow: hidden;
+	margin: 6px;
+	cursor: pointer;
+	cursor: pointer;
+}
+#user-page-container-post-posts-item img {
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+}

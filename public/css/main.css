@@ -1,3 +1,7 @@
+* {
+	transition: all .3s linear;
+	font-family: Ubuntu;
+}
 body {
 	margin: 0px;
 	padding: 0px;
@@ -10,6 +14,13 @@ body {
 	border-left: 1px dotted #d9d9d9;
 	margin: 0 auto;
 	overflow: hidden;
+	width: 100vw;
+	height: 100vh;
+	background: white!important;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	z-index: 10101;
 }
 .navbar {
 	height: 10vh;
@@ -20,9 +31,10 @@ body {
 	box-sizing: border-box;
 	/*! align-items: baseline; */
 	box-shadow: 0px 15px 30px rgba(170, 170, 170, 0.24);
-	overflow: hidden;
+	/*! overflow: hidden; */
 	/*! position: relative; */
 	line-height: 10vh;
+	position: relative;
 }
 
 .navbar > a:nth-child(1) {
@@ -40,6 +52,29 @@ body {
 	margin: 0 10px;
 }
 
+#navmenu {
+	background-color: white;
+	border: 1px solid #ff54002e;
+	border-radius: 3px;
+	width: 200px;
+	position: absolute;
+	top: 73%;
+	left: 83%;
+	/*! z-index: 100000000010; */
+}
+#navmenu .item {
+	color: #1a1a1a;
+	padding-left: 5px;
+	border-bottom: 1px solid #aaa;
+	height: 30px;
+	font-size: 14px;
+	line-height: 30px;
+	cursor: pointer;
+}
+#navmenu .item a {
+	color: #1a1a1a;
+}
+
 #create-post-button {
 	background-color: transparent;
 	border: none;
@@ -50,10 +85,11 @@ body {
 #create-post-container{
 	width: 100vw;
 	height: 100vh;
-	background-color: rgba(22, 22, 22, 0.71);
+	background-color: rgba(0, 0, 0, 0.75);
 	position: fixed;
 	top: 0px;
 	left: 0px;
+	z-index: 1010;
 }
 #create-post-body{
 	width: 30rem;
@@ -62,7 +98,7 @@ body {
 	border-radius: 15px;
 	background-color: rgb(35, 35, 35);
 	position: absolute;
-	top: 30%;
+	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	overflow: hidden;
@@ -93,12 +129,15 @@ body {
 	overflow-y: scroll;
 	height: 90vh;
 	position: relative;
+	width: 50vw;
+	border: 1px solid #eee;
+	margin: 0px auto;
 }
 
 
 
 .posted-by-image img {
-	height: 2em;
+	height: 1em;
 	float: left;
 }
 .posted-by-container {
@@ -115,12 +154,22 @@ body {
 .posted-by-name {
 	margin: 5px 20px;
 	font-weight: bold;
-	font-size: small;
-	font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	font-size: 17px;
+	font-family: ubuntu;
+}
+#posted-by-name-date {
+	font-size: 13px;
+	font-weight: normal;
+	font-family: Ubuntu;
+	text-indent: 5px;
+}
+.posted-by-name a {
+	color: #002d6d;
+	text-decoration: none;
 }
 .post {
-	width: 52%;
-	height: 35em;
+	width: 400px;
+	height: 27em;
 	overflow: hidden;
 	position: relative;
 	left: 50%;
@@ -141,26 +190,70 @@ body {
 	padding: 0;
 	position: relative;
 	max-height: 486px;
+	border-radius: 5px;
+	overflow: hidden;
 }
+.image-container .prev-button {
+	position: absolute;
+	top: 40%;
+	left: 10px;
+	transform: translateY(50%);
+	color: white;
+	font-size: 2rem;
+	cursor: pointer;
+	z-index: 30;
+}
+.image-container .next-button {
+	position: absolute;
+	top: 40%;
+	right: 10px;
+	font-size: 2rem;
+	transform: translateY(50%);
+	color: white;
+	cursor: pointer;
+	z-index: 30;
+}
+
 .post-image {
-	height: 480px;
-	width: 467.7px;
+	/*! height: 480px; */
+	width: 400px;
+	object-fit: fill;
 }
 .post-image img {
 
 }
 .new-comment {
-	width: 78%;
+	width: 75%;
 	height: 50px;
 	display: block;
 	float: left;
+	outline: none;
+	border: 1px solid #48371845;
+	border-radius: 5px;
+	margin-right: 9px;
 }
-button {
+#showpost-comment-comments {
+	position: relative;
+}
+.add-comment-container {
+	position: absolute;
+	bottom: 0px;
+	z-index: 99999;
+	background: white;
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #eee;
+	box-sizing: border-box;
 }
 .add-comment-container button {
 	width: 20%;
-	height: 58px;
+	height: 50px;
 	display: block;
+	cursor: pointer;
+	background-color: #84c3f9;
+	color: white;
+	border: none;
+	border-radius: 5px;
 }
 .comment {
 	text-align: justify;
@@ -168,14 +261,18 @@ button {
 	border-bottom: 1px solid #ff9f588a;
 	padding: 14px 25px;
 	line-height: 25px;
-	font-size: small;
+	font-size: 15px;
+	font-family: Ubuntu;
 	justify-content: center;
 	align-items: baseline;
 	display: block;
-	display: block;
 	float: left;
-	display: inline-block;
-	display: inline-block;
+}
+.comment-content {
+	text-align: justify;
+	line-height: 20px;
+	font-size: 13px;
+	font-family: Ubuntu;
 }
 .comments-container {
 	overflow: hidden;
@@ -185,11 +282,25 @@ button {
 	height: 800px;
 	padding-bottom: 200px;
 	/*! padding-top: 20px; */
-	border-top: 35px solid #eee;
+	margin-top: 10px;
+}
+
+.commenter {
+	display: flex;
+	align-items: center;
 }
 
 .commenter-image img {
-	height: 50px;
+	height: 30px;
+	width: 30px;
+}
+.commenter-image {
+	border-radius: 50%;
+	overflow: hidden;
+	width: 30px;
+	height: 30px;
+	object-fit: unset;
+	margin-right: 15px;
 }
 
 
@@ -197,11 +308,12 @@ button {
 	display: flex;
 	justify-content: space-between;
 }
-/*.like-container .like-button {*/
-/*	width: 10px;*/
-/*	height: 10px;*/
-/*	display: inline-block;*/
-/*}*/
+.like-container .like-button {
+	cursor: pointer;
+}
+.like-container .unlike-button {
+	cursor: pointer;
+}
 .like-container .like-comment-count{
 	font-family: ubuntu;
 	font-size: 15px;
@@ -211,4 +323,111 @@ button {
 	font-size: 5px;
 	margin: 0px 5px;
 	transform: translateY(-82%);
+}
+
+
+.leave-comment {
+	margin-top: 10px;
+	text-align: left;
+	font-size: 16px;
+	color: skyblue;
+	font-family: ubuntu;
+}
+
+textarea {
+	resize: none;
+	padding: 10px;
+	font-size: 14px;
+	font-family: Ubuntu;
+	box-sizing: border-box;
+	outline: none;
+}
+
+.post-separator {
+	background-color: none;
+	border: 1.5px dotted #4e2626;
+}
+
+.hide {
+	display: none!important;
+}
+
+/* show post */
+#showpost-container {
+	background-color: rgba(26, 26, 26, 0.95);
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	z-index: 100060;
+}
+#showpost-container {
+
+}
+#showpost-close {
+	font-size: 1.2rem;
+	color: white;
+	cursor: pointer;
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
+
+#showpost-post {
+	min-width: 480px;
+	width: 55vw;
+	height: 85vh;
+	background-color: rgba(255, 255, 255, 0);
+	border-right: 5px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	overflow: hidden;
+	/*! border-radius: 5px; */
+	/*! box-shadow: 0px 0px 15px #aaaaaad1; */
+	display: flex;
+}
+
+
+#showpost-image {
+	width: 60%;
+}
+#showpost-comment {
+	width: 40%;
+	padding: 10px;
+	font-size: 14px;
+	font-family: Ubuntu;
+	line-height: 14px;
+	background-color: white;
+	position: relative;
+}
+#showpost-comment-postcontent {
+	padding: 5px 20px;
+	box-shadow: 0px 10px 22px #0000006b;
+}
+#showpost-comment-postcontent hr {
+	border: none;
+	border-bottom: 1px solid #a1a1a1a6;
+}
+#showpost-comment-postcontent-content {
+	max-height: 400px;
+	overflow-y: auto;
+}
+
+#showpost-comment-user a {
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	color: #003a4d;
+}
+#showpost-comment-user #user-image {
+	margin: 5px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+#showpost-comment-user #user-name {
+	margin: 5px;
+	font-size: .6rem;
 }

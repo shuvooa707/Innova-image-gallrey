@@ -23,8 +23,9 @@ class CreateUserRequest extends FormRequest
     {
         return [
 	        'name' => 'required|max:255|string',
+	        'username' => 'required',
 	        'email' => 'required|email',
-	        'image' => 'required|file|mimes:jpg,png,jpeg',
+	        'image' => 'required|file|mimes:jpg,png,jpeg'
         ];
     }
 }

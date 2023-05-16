@@ -1,8 +1,9 @@
 import {useRef} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Login } from "../utils/auth";
 
-export default function Login() {
+export default function login() {
 	const navigate = useNavigate();
 	const email = useRef();
 	const password = useRef();
@@ -15,19 +16,13 @@ export default function Login() {
 					password: password.current.value
 				})
 				.then(function (response) {
-					console.log(response);
+					if ( Login() ) {
+						navigate("/");
+					}
 				})
 				.catch(function (error) {
 					console.log(error);
 				});
-			});
-	}
-	const testing = (e) => {
-		e.preventDefault();
-		axios.get('/api/testing1')
-			.then(response => {
-				console.log(response)
-				navigate('/');
 			});
 	}
 	return (
@@ -40,7 +35,6 @@ export default function Login() {
 						<label htmlFor="password">Password</label>
 						<input ref={password} type="text" id="password" name="password" />
 						<button type="submit">Login</button>
-						<button onClick={testing}>testing1</button>
 					</form>
 				</div>
 			</div>

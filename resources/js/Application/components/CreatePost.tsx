@@ -9,9 +9,11 @@ export default function CreatePost({ setShowCreatePostModal }) {
 							<i className="fas fa-times"></i>
 						</span>
 					</div>
-					<div id="create-post-body-input">
+					<div id="create-post-body-input-image">
+						+
+					</div>
+					<div id="create-post-body-input-content">
 						<textarea name="" id="create-post-body-input-content">
-
 						</textarea>
 					</div>
 				</div>

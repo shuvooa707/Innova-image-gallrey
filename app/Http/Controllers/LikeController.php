@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LikePostRequest;
 use App\Models\Like;
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
@@ -18,9 +21,27 @@ class LikeController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(LikePostRequest $request)
     {
-        //
+		$validated = $request->validated();
+		$like = Like::firstOrCreate([
+			"user_id" => Auth::user()->id,
+			"post_id" => $validated["post_id"]
+		]);
+		if ( !$like ) {
+			return [
+				"status" => "failed"
+			];
+		}
+
+	    $post = Post::with(["comments" => function($query){
+			$query->with(["user"]);
+	    }, "likes", "medias", "user"])->where("id",$request->post_id)->first();
+
+	    return [
+			"status" => "success",
+	        "post" => $post
+        ];
     }
 
     /**
@@ -58,8 +79,24 @@ class LikeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Like $like)
+    public function destroy(Request $request)
     {
-        //
+        $like = Like::where([
+			"user_id" => Auth::user()->id,
+			"post_id" => $request->post_id,
+        ])->get()->first();
+
+		if ( $like ) {
+			$like->delete();
+		}
+
+	    $post = Post::with(["comments" => function($query){
+		    $query->with(["user"]);
+	    }, "likes", "medias", "user"])->where("id",$request->post_id)->first();
+
+	    return [
+			"status" => "success",
+			"post" => $post
+		];
     }
 }

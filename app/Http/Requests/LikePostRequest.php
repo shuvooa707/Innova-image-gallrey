@@ -11,7 +11,7 @@ class LikePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class LikePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "post_id" => "required|int"
         ];
     }
 }

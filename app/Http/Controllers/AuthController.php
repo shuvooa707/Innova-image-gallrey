@@ -70,7 +70,7 @@ class AuthController extends Controller
 	public function register(CreateUserRequest $request): array
 	{
 		// Retrieve the validated input data...
-		$validated = $request->safe()->only(['name', 'username', 'email']);
+		$validated = $request->safe()->only(['name', 'username', 'email', 'username']);
 		$validated["password"] = Hash::make($request->password);
 		$imageName = Str::uuid() .".".  $request->file("image")->getClientOriginalExtension();
 		$request->file("image")->storeAs($imageName, ['disk' => 'public']);
@@ -96,6 +96,14 @@ class AuthController extends Controller
 				"status" => "failed"
 			];
 		}
+		return [
+			"status" => "success"
+		];
+	}
+
+	public function logout()
+	{
+		Auth::logout();
 		return [
 			"status" => "success"
 		];
