@@ -32,10 +32,10 @@ export default function Post(props) {
 	} = props.post;
 
 	const [totallikes, setTotallikes] = useState(props.post.totallikes);
-	const [liked, setLiked] = useState(false);
-	useEffect(()=>{
-		setLiked(liked_by_me);
-	},[]);
+	const [liked, setLiked] = useState(props.post.liked_by_me);
+	// useEffect(()=>{
+	// 	setLiked(liked_by_me);
+	// },[]);
 
 	const likepost = () => {
 		if ( !isLoggedIn() ) {
@@ -110,13 +110,13 @@ export default function Post(props) {
 					}
 
 					<span className="like-comment-count">
-						Likes {totallikes}
+						likes {totallikes}
 						<i className="fa-solid fa-circle separator-dot"></i>
-						Comments {comments.length}
+						comments {comments.length}
 					</span>
 				</div>
 				<div className="leave-comment">
-					<a style={{ color: "blue", cursor: "pointer" }} onClick={()=>{ showPostModal(); setCurrentPost(currentpost);  }}>
+					<a style={{ color: "blue", cursor: "pointer" }} onClick={()=>{ showPostModal(); setCurrentPost(currentpost); console.log( liked )  }}>
 						View Comments →
 					</a>
 				</div>

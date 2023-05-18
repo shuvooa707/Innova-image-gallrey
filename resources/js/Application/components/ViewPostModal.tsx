@@ -8,9 +8,9 @@ import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import isLoggedIn from "../utils/auth";
 import {useRef} from "react";
+import ProfileContext from "../utils/ProfileContext";
 
 export default function ViewPostModal({Post}) {
-	console.log(Post)
 	const navigate = useNavigate();
 	const [post, setPost] = useState(Post);
 	const [comments, setComments] = useState(Post.comments);
@@ -30,8 +30,12 @@ export default function ViewPostModal({Post}) {
 		axios.post("/api/like", {
 			post_id: post.id
 		}).then(response=>{
-			setLiked(!liked);
 			setPost(response.data.post);
+			setLiked(response.data.post.liked_by_me);
+
+			// LIKED
+			const LIKED = new Event("LIKED");
+			window.dispatchEvent(LIKED);
 		});
 	}
 	const unlikepost = () => {
@@ -42,8 +46,12 @@ export default function ViewPostModal({Post}) {
 		axios.post("/api/unlike", {
 			post_id: post.id
 		}).then(response => {
-			setLiked(!liked);
 			setPost(response.data.post);
+			setLiked(response.data.post.liked_by_me);
+
+			// UNLIKED
+			const UNLIKED = new Event("UNLIKED");
+			window.dispatchEvent(UNLIKED);
 		});
 	}
 
@@ -56,9 +64,11 @@ export default function ViewPostModal({Post}) {
 			if ( response.data.status == "success" ) {
 				commentInput.current.value = ``;
 				setComments([...comments, response.data.comment]);
-				document.querySelector(".comments-container").scrollBy(0,1000);
+				let commentsContainer = document.querySelector(".comments-container");
+				commentsContainer.scrollBy(0, commentsContainer.scrollHeight);
 
-				const NEW_COMMENT_CREATED = new Event("NEW_COMMENT_CREATED");
+				// @ts-ignore
+				const NEW_COMMENT_CREATED = new CustomEvent("NEW_COMMENT_CREATED", { detail: {post} });
 				window.dispatchEvent(NEW_COMMENT_CREATED);
 
 				setPost(response.data.post);
@@ -141,6 +151,9 @@ export default function ViewPostModal({Post}) {
 												</Link>
 												<div className="comment-content">
 													{comment.content}
+												</div>
+												<div>
+													<i className="fa-solid fa-ellipsis"></i>
 												</div>
 											</div>
 										)

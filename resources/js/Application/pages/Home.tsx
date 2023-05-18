@@ -5,17 +5,12 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import {Logout} from "../utils/auth";
 
 
-
-
 export default function Home() {
 	const [posts, setPosts] = useState([]);
 	useEffect(() => {
 		axios.get("/api/posts")
 			.then(response => {
 				setPosts(response.data.posts);
-				if ( !response.data.loggedin ) {
-					Logout();
-				}
 			});
 	}, []);
 
@@ -26,7 +21,14 @@ export default function Home() {
 					setPosts(response.data.posts);
 				});
 		});
+		window.addEventListener("NEW_COMMENT_CREATED", function (event){
+			updateCommentedPost(event.detail.post)
+		});
 	},[]);
+
+	const updateCommentedPost = (newPost) => {
+		console.log(newPost);
+	}
 
 	const fetchMoreData = () => {
 		axios.get(`/api/posts?offset=${posts.length}`)

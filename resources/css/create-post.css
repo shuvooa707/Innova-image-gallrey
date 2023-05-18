@@ -69,6 +69,7 @@ textarea#create-post-body-input-content{
 	position: absolute;
 	top: 0px;
 	left: 0px;
+	cursor: pointer;
 }
 
 #image-selected-image-container div i {

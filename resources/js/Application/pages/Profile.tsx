@@ -4,25 +4,25 @@ import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import "../../../css/profile.css"
 import ShowPostContext from "../utils/showPostContext";
+import isLoggedIn from "../utils/auth";
+import ProfileContext from "../utils/ProfileContext";
 
-export default function User() {
-	const navigate = useNavigate();
-	let params = useParams();
-	const [profile, setProfile] = useState();
+export default function Profile() {
+	const { profile, setProfile } = useContext(ProfileContext);
+	//const [profile, setProfile] = useState();
 	const [comment_count, setCommentCount] = useState(0);
 	const [like_count, setLikeCount] = useState(0);
 	const [posts, setPosts] = useState([]);
-	const id = params.id;
+
 	useEffect(()=>{
 		axios.get("/api/profile")
 			.then(response=>{
 				setProfile(response.data.profile)
 				setCommentCount(response.data.comment_count);
 				setLikeCount(response.data.like_count);
-				setPosts(response.data.profile.posts);
+				setPosts(response.data.posts);
 			})
 	},[]);
-
 	useEffect(()=>{
 		window.addEventListener("NEW_POST_CREATED", function (){
 			axios.get("/api/profile")
@@ -34,6 +34,24 @@ export default function User() {
 				})
 		});
 		window.addEventListener("NEW_COMMENT_CREATED", function (){
+			axios.get("/api/profile")
+				.then(response=>{
+					setProfile(response.data.profile)
+					setCommentCount(response.data.comment_count);
+					setLikeCount(response.data.like_count);
+					setPosts(response.data.profile.posts);
+				})
+		});
+		window.addEventListener("LIKED", function (){
+			axios.get("/api/profile")
+				.then(response=>{
+					setProfile(response.data.profile)
+					setCommentCount(response.data.comment_count);
+					setLikeCount(response.data.like_count);
+					setPosts(response.data.profile.posts);
+				})
+		});
+		window.addEventListener("UNLIKED", function (){
 			axios.get("/api/profile")
 				.then(response=>{
 					setProfile(response.data.profile)

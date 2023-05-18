@@ -11,6 +11,7 @@ import ViewPostModal from "./components/ViewPostModal";
 import CustomAlertModal from "./components/CustomAlertModal";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import Navbar from "./components/Navbar";
+import ProfileContext from "./utils/ProfileContext";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
 	const [customAlertVisible, setCustomAlertVisible] = useState(false);
 	const [customalertdata, setCustomalertdata] = useState({ content: "Post Create", icon: "success" });
 	const [currentpost, setCurrentpost] = useState(null);
+	const [profile, setProfile] = useState(null);
 	const showPostModal = () => {
 		setPostVisible(!postVisible);
 	}
@@ -28,11 +30,11 @@ function App() {
 	const setCurrentPost = (post) => {
 		setCurrentpost(post);
 	}
-	const navigate = useNavigate();
 
 
 	return (
 		<ShowPostContext.Provider value={{ showPostModal, setCurrentPost, showCustomAlertVisible, setCustomalertdata }}>
+			<ProfileContext.Provider value={{ profile: profile, setProfile: setProfile }}>
 				<div className="container">
 					{
 						showCreatePostModal &&
@@ -58,6 +60,7 @@ function App() {
 					customAlertVisible &&
 					<CustomAlertModal message={customalertdata} />
 				}
+			</ProfileContext.Provider>
 		</ShowPostContext.Provider>
 	);
 }

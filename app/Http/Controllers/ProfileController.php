@@ -16,9 +16,20 @@ class ProfileController extends Controller
 					  ->orderBy('created_at', 'DESC');
 			}
 		])->where("id", Auth::user()->id)->first();
-
+		$posts = $profile->posts;
+		if ( Auth::check() ) {
+			$posts->each(function ($post){
+				$liked_by_me = $post->likes
+					->map(function ($like){ return $like->user_id; })
+					->toArray();
+				$post["liked_by_me"] = in_array(Auth::user()->id, $liked_by_me);
+			});
+		} else {
+			$post["liked_by_me"] = false;
+		}
 		return [
-			"profile" => $profile
+			"profile" => $profile,
+			"posts" => $posts
 		];
     }
 }

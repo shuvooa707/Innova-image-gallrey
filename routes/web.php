@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/{any}', function () {
-//    return view('application');
-//})->where('any', '.*');
+Route::get('/{any}', function () {
+    return view('application');
+})->where('any', '.*');
 
 
 Route::get("/delete-empty-posts", function (){
@@ -27,7 +27,7 @@ Route::get("/delete-empty-posts", function (){
 			}
 		});
 });
-
-Route::get("/flush", function (){
-	dd(cookie());
-});
+//
+//Route::get("/flush", function (\Illuminate\Support\Facades\Request $request){
+//	return ["apple"];
+//});

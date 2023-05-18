@@ -1,3 +1,8 @@
+@font-face {
+	font-family: 'GreatVibesRegular';
+	src: url('https://www.1001fonts.com/download/font/lovers-quarrel.regular.ttf');
+}
+
 * {
 	transition: all .3s linear;
 	font-family: Ubuntu;
@@ -45,12 +50,23 @@ body {
 	/*! font-size: .8rem; */
 	/*! border: 2px solid white; */
 	/*! display: inline-block; */
+	color: white;
+	text-decoration: none;
+	margin: 0 10px;
+	padding-left: 50px;
+	font-family: Z003;
+	font-size: 1.2rem;
+	font-weight: bold;
+	text-decoration: underline;
 }
 
 .navbar a {
 	color: white;
 	text-decoration: none;
 	margin: 0 10px;
+	padding-left: 50px;
+	font-size: 1.2rem;
+	font-weight: bold;
 }
 
 #navmenu {
@@ -61,6 +77,7 @@ body {
 	position: absolute;
 	top: 73%;
 	left: 83%;
+	box-shadow: 5px 5px 20px #aaaaaa7d;
 	/*! z-index: 100000000010; */
 }
 #navmenu .item {
@@ -72,6 +89,7 @@ body {
 	line-height: 30px;
 	cursor: pointer;
 	display: block;
+	padding: 10px;
 }
 
 
@@ -135,21 +153,21 @@ body {
 }
 .image-container {
 	align-items: stretch;
-	border: 0;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: row;
 	flex-shrink: 0;
 	font: inherit;
-	font-size: inherit;
 	font-size: 100%;
 	height: 100%;
 	margin: 0;
+	margin-bottom: 5px;
 	padding: 0;
 	position: relative;
 	max-height: 486px;
 	border-radius: 5px;
 	overflow: hidden;
+	border: 1px solid #8a59010f;
 }
 .image-container .prev-button {
 	position: absolute;
@@ -247,11 +265,11 @@ body {
 	display: block;
 	width: 100%;
 	overflow-y: auto;
-	height: 450px;
-	padding-bottom: 20px;
-	/*! padding-top: 20px; */
+	height: 550px;
+	padding-bottom: 150px;
 	margin-top: 10px;
 }
+
 .comments-container a {
 	text-decoration: none;
 }
@@ -299,8 +317,8 @@ body {
 }
 .like-container .like-comment-count{
 	font-family: ubuntu;
-	font-size: 15px;
-	font-weight: bold;
+	font-size: 12px;
+	font-weight: normal;
 }
 .like-container .separator-dot {
 	font-size: 5px;

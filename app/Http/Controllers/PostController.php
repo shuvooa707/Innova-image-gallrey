@@ -38,10 +38,8 @@ class PostController extends Controller
 			$posts->each(function ($post){
 				$liked_by_me = $post->likes
 										->map(function ($like){ return $like->user_id; })
-										->search(function ($user_id){
-											return Auth::user()->id == $user_id;
-										}, $strict = true);
-				$post["liked_by_me"] = boolval($liked_by_me);
+										->toArray();
+				$post["liked_by_me"] = in_array(Auth::user()->id, $liked_by_me);
 			});
 		} else {
 			$post["liked_by_me"] = false;

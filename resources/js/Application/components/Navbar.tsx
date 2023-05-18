@@ -10,8 +10,16 @@ export default function Navbar({ setShowCreatePostModal }) {
 	const [navMenuVisible, setNavMenuVisible] = useState(false);
 	const logout = () => {
 		if ( Logout() ) {
-			navigate("/");
-			homePageLinkElement.current.click();
+			// navigate("/");
+			// homePageLinkElement.current.click();
+			// window.location = "/";
+
+			// const LOGGED_OUT = new Event("LOGGED_OUT");
+			// window.dispatchEvent(LOGGED_OUT);
+			setTimeout(()=>{
+				console.log("LOGGED_OUT");
+				navigate("/");
+			},0);
 		}
 	}
 

@@ -22,11 +22,11 @@ class CreatePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "img1" => "file|mimes:jpg,png,jpeg",
-            "img2" => "file|mimes:jpg,png,jpeg",
-            "img3" => "file|mimes:jpg,png,jpeg",
-            "img4" => "file|mimes:jpg,png,jpeg",
-            "img5" => "file|mimes:jpg,png,jpeg",
+            "img1" => "file|mimes:jpg,png,jpeg,webp,git",
+            "img2" => "file|mimes:jpg,png,jpeg,webp,git",
+            "img3" => "file|mimes:jpg,png,jpeg,webp,git",
+            "img4" => "file|mimes:jpg,png,jpeg,webp,git",
+            "img5" => "file|mimes:jpg,png,jpeg,webp,git",
 	        "content" => "string|min:3|max:255"
         ];
     }

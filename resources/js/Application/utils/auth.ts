@@ -10,7 +10,7 @@ export default function isLoggedIn(): boolean {
 
 export async function Login(): boolean {
 	try {
-		Cookies.set("innovagram-cookie", true, {expires: 86400, sameSite: 'lax'})
+		Cookies.set("innovagram-cookie", true, {expires: 60*60*24, sameSite: 'lax'})
 	} catch (e) {
 		return false;
 	}

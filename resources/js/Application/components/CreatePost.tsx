@@ -57,13 +57,13 @@ export default function CreatePost({setShowCreatePostModal}) {
 			.then(response => {
 				let {status, post} = response.data;
 
-				if (status == "success") {
+				if ( status == "success" )
+				{
 					setShowCreatePostModal(false);
 					setCustomalertdata({content: "Post Create", icon: "success"});
 					showCustomAlertVisible();
 
-					const NEW_POST_CREATED = new Event("NEW_POST_CREATED");
-					// console.log(NEW_POST_CREATED)
+					const NEW_POST_CREATED = new CustomEvent("NEW_POST_CREATED");
 					window.dispatchEvent(NEW_POST_CREATED);
 					navigate("/profile");
 				}
