@@ -22,6 +22,11 @@ return new class extends Migration
 				->references("id")
 				->on("posts")
 				->cascadeOnDelete();
+
+			$table->foreign("user_id")
+				->references("id")
+				->on("users")
+				->cascadeOnDelete();
         });
     }
 

@@ -14,7 +14,7 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
-        Post::factory(5000)->create()->each(function ($post){
+        Post::factory(100)->create()->each(function ($post){
 			Media::factory(rand(1, 5))->create([
 				"post_id" => $post->id
 			]);

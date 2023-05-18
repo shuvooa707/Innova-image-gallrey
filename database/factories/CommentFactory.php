@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,7 +19,7 @@ class CommentFactory extends Factory
     public function definition(): array
     {
 	    $userids = User::pluck("id")->toArray();
-	    $postids = User::pluck("id")->toArray();
+	    $postids = Post::pluck("id")->toArray();
         return [
             "content" => $this->faker->text(),
 	        "user_id" => $userids[rand(0, count($userids)-1)],

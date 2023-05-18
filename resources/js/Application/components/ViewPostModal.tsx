@@ -7,13 +7,17 @@ import {Pagination} from "swiper";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import isLoggedIn from "../utils/auth";
+import {useRef} from "react";
 
 export default function ViewPostModal({Post}) {
+	console.log(Post)
 	const navigate = useNavigate();
 	const [post, setPost] = useState(Post);
-	const { showPostModal } = useContext(ShowPostContext);
+	const [comments, setComments] = useState(Post.comments);
+	const { showPostModal, showCustomAlertVisible, setCustomalertdata } = useContext(ShowPostContext);
 	const { liked_by_me } = post;
 	const [liked, setLiked] = useState(false);
+	const commentInput = useRef();
 	useEffect(()=>{
 		setLiked(liked_by_me);
 	},[]);
@@ -43,6 +47,19 @@ export default function ViewPostModal({Post}) {
 		});
 	}
 
+	const makeComment = () => {
+		if ( commentInput.current.value.length < 1 ) return;
+		axios.post("/api/comments/create", {
+			"content": commentInput.current.value,
+			"post_id": post.id
+		}).then(response => {
+			if ( response.data.status == "success" ) {
+				commentInput.current.value = ``;
+				setComments([...comments, response.data.comment]);
+				document.querySelector(".comments-container").scrollBy(0,1000);
+			}
+		})
+	}
 
 	return (
 		<div id="showpost-container">
@@ -72,7 +89,6 @@ export default function ViewPostModal({Post}) {
 							<div id="posted-by-name-date"> 12th may</div>
 						</Link>
 					</div>
-					<hr/>
 					<div id="showpost-comment-postcontent">
 						<div id="showpost-comment-postcontent-content">
 							{ post.content }
@@ -105,7 +121,7 @@ export default function ViewPostModal({Post}) {
 						<div className="comment-container">
 							<div className="comments-container">
 								{
-									post?.comments.map((comment, i) => {
+									comments.map((comment, i) => {
 										return (
 											<div className="comment" key={i}>
 												<Link to={"/u/" + comment.user.id} onClick={showPostModal}>
@@ -130,8 +146,10 @@ export default function ViewPostModal({Post}) {
 					</div>
 					<br/>
 					<div className="add-comment-container">
-						<textarea name="" className="new-comment" rows="5"></textarea>
-						<button>Add</button>
+						<textarea ref={commentInput} name="" className="new-comment" rows="5"></textarea>
+						<button onClick={ makeComment }>
+							Shoot <i className="fa-solid fa-paper-plane"></i>
+						</button>
 					</div>
 				</div>
 			</div>

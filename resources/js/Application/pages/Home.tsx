@@ -15,6 +15,15 @@ export default function Home() {
 			});
 	}, []);
 
+	useEffect(()=>{
+		window.addEventListener("NEW_POST_CREATED", function (){
+			axios.get("/api/posts")
+				.then(response => {
+					setPosts(response.data.posts);
+				});
+		});
+	},[]);
+
 	const fetchMoreData = () => {
 		axios.get(`/api/posts?offset=${posts.length}`)
 			.then(response => {

@@ -116,7 +116,9 @@ export default function Post(props) {
 					</span>
 				</div>
 				<div className="leave-comment">
-					<a style={{ color: "blue", cursor: "pointer" }} onClick={()=>{ showPostModal(); setCurrentPost(currentpost);  }}>View Comments</a>
+					<a style={{ color: "blue", cursor: "pointer" }} onClick={()=>{ showPostModal(); setCurrentPost(currentpost);  }}>
+						View Comments →
+					</a>
 				</div>
 			</div>
 			<hr className="post-separator" />

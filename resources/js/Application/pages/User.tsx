@@ -1,7 +1,8 @@
 import {useParams} from "react-router-dom";
 import "../../../css/user-page-style.css";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
+import ShowPostContext from "../utils/showPostContext";
 
 
 export default function User() {
@@ -22,6 +23,9 @@ export default function User() {
 				}
 			})
 	},[])
+
+	const { showPostModal, setCurrentPost } = useContext(ShowPostContext);
+
 	return (
 		<div id="user-page-container">
 			<div id="user-page-details">
@@ -49,7 +53,7 @@ export default function User() {
 					{
 						user?.posts.map((post, i)=>{
 							return (
-								<div id="user-page-container-post-posts-item" key={i}>
+								<div onClick={()=>{ showPostModal(); setCurrentPost(post);  }} id="user-page-container-post-posts-item" key={i}>
 									<img src={"/img/post/"+post.medias[0].path} alt=""/>
 								</div>
 							)

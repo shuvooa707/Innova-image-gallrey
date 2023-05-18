@@ -16,3 +16,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/{any}', function () {
     return view('application');
 })->where('any', '.*');
+
+
+Route::get("/delete-empty-posts", function (){
+	\App\Models\Post::with(["medias"])
+		->get()
+		->each(function ($post){
+			if( !$post->medias->count() ) {
+				$post->delete();
+			}
+		});
+});

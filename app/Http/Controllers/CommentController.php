@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateCommentRequest;
+use App\Http\Requests\CreateUserRequest;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -26,9 +29,17 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateCommentRequest $request)
     {
-        //
+		$comment = Comment::create([
+			"content" => $request->content,
+			"post_id" => $request->post_id,
+			"user_id" => Auth::user()->id
+		]);
+		return [
+			"status" => "success",
+			"comment" => Comment::with(["user"])->where("id", $comment->id)->first()
+		];
     }
 
     /**

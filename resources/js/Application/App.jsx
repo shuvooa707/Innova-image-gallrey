@@ -1,43 +1,46 @@
 import React, {useState} from 'react';
-import {NavLink, Route, RouterProvider, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import User from "./pages/User";
 import CreatePost from "./components/CreatePost";
 import Login from "./pages/Login";
-import SliderTest from "./pages/SliderTest";
 import ShowPostContext from "./utils/showPostContext";
 import ViewPostModal from "./components/ViewPostModal";
-import { Logout } from "./utils/auth";
+import CustomAlertModal from "./components/CustomAlertModal";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import Navbar from "./components/Navbar";
 
 function App() {
 
-	const [ showCreatePostModal,  setShowCreatePostModal] = useState(false);
-
+	const [showCreatePostModal,  setShowCreatePostModal] = useState(false);
 	const [postVisible, setPostVisible] = useState(false);
+	const [customAlertVisible, setCustomAlertVisible] = useState(false);
+	const [customalertdata, setCustomalertdata] = useState({ content: "Post Create", icon: "success" });
 	const [currentpost, setCurrentpost] = useState(null);
+	const [page, setPage] = useState(false);
 	const showPostModal = () => {
 		setPostVisible(!postVisible);
+	}
+	const showCustomAlertVisible = () => {
+		setCustomAlertVisible(!customAlertVisible);
 	}
 	const setCurrentPost = (post) => {
 		setCurrentpost(post);
 	}
-
-
+	const reloadPage = () => {
+		setPage(!page);
+	}
 
 	return (
-		<ShowPostContext.Provider value={{ showPostModal: showPostModal, setCurrentPost: setCurrentPost }}>
+		<ShowPostContext.Provider value={{ showPostModal, setCurrentPost, showCustomAlertVisible, setCustomalertdata }}>
 			<div className="container">
 				{
 					showCreatePostModal &&
 					<CreatePost setShowCreatePostModal={setShowCreatePostModal} />
 				}
-				<Navbar
-					setShowCreatePostModal={()=>{ setShowCreatePostModal(!showCreatePostModal) }}
-				/>
+				<Navbar setShowCreatePostModal={()=>{ setShowCreatePostModal(!showCreatePostModal) }}/>
 				<Routes>
 					<Route element={<Home />} path={"/"}></Route>
 					<Route element={<Register />} path={"/register"}></Route>
@@ -52,6 +55,10 @@ function App() {
 			{
 				postVisible &&
 				<ViewPostModal Post={currentpost} />
+			}
+			{
+				customAlertVisible &&
+				<CustomAlertModal message={customalertdata} />
 			}
 		</ShowPostContext.Provider>
 	);

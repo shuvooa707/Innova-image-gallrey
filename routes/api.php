@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -25,7 +26,16 @@ Route::middleware(['auth:sanctum'])->group(function (){
 	Route::get("/profile", [ProfileController::class, "index"]);
 	Route::post("/like", [LikeController::class, "create"]);
 	Route::post("/unlike", [LikeController::class, "destroy"]);
+
+	// Post routes
+	Route::post("/posts/create", [PostController::class, "store"]);
+	Route::post("/posts/destroy", [PostController::class, "destroy"]);
+
+	// Comment routes
+	Route::post("/comments/create", [CommentController::class, "store"]);
+	Route::post("/comments/destroy", [CommentController::class, "destroy"]);
 });
+
 
 Route::get("/posts", [PostController::class, "index"]);
 Route::get("/user/{id}", [UserController::class, "show"]);

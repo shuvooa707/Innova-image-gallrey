@@ -1,30 +1,28 @@
-.container {
-	width: 50%;
+#register-container {
+	width: 100%;
 	height: 100vh;
 	border-right: 1px dotted #d9d9d9;
 	border-left: 1px dotted #d9d9d9;
 	margin: 0 auto;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	width: 100vw;
 	height: 100vh;
-	background: black;
-	position: fixed;
-	top: 0px;
-	left: 0px;
-	z-index: 10101;
+	z-index: 1;
 }
 .card {
-	width: 580px;
-	background: white;
-	/*padding: 10px 20px;*/
-	border-radius: 5px;
-	position: absolute;
-	top: 40%;
+	width: 35rem;
+	height: 28rem;
+	border-radius: 10px;
+	border: 1px solid #7d56269c;
+	position: relative;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	transform: translateX(-50%);
+	box-shadow: 10px 10px 10px #aaaaaa;
 	overflow: hidden;
-	font-family: Ubuntu;
-	font-size: 18px;
+	padding: 15px;
+	background: #1e90ff05;
+	z-index: 1;
+	padding-bottom: 30px;
 }
 .card form {
 	padding: 10px;
@@ -33,14 +31,13 @@
 	text-align: center;
 	padding: 13px 10px;
 	font-family: Ubuntu;
-	background-color: #1a1a1a;
-	color: white;
-	border: 1px solid #eee;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 }
+#form {
+
+}
 .form-group	{
-	display: flex;
 	justify-content: left;
 	margin: 5px 0px;
 	padding: 5px;
@@ -48,17 +45,22 @@
 }
 .form-group label {
 	margin-bottom: 5px;
+	display: block;
 }
 .form-group input {
-	border-radius: 3px;
-	padding: 3px;
-	outline: none;
-	border: 1px solid rgba(219, 136, 0, 0.85);
-	font-size: 15px;
-	font-family: Ubuntu;
+	display: block;
+	padding: 15px 10px;
+	box-sizing: content-box;
+	border: 1px solid rgba(71, 147, 255, 0.6);
+	border-radius: 5px;
 }
 .form-group button {
-	padding: 5px 0px;
+	background-color: dodgerblue;
+	color: white;
+	padding: 10px 0px;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
 }
 small {
 	color: #dd0000;
@@ -66,4 +68,15 @@ small {
 	font-family: Ubuntu;
 	font-weight: bold;
 	/*margin-top: -5px;*/
+}
+
+.row {
+	display: flex;
+}
+.col-lg-6 {
+	width: 50%;
+	overflow: hidden;
+}
+#preview-image {
+	height: 100px;
 }

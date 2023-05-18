@@ -38,6 +38,13 @@ class LikeController extends Controller
 			$query->with(["user"]);
 	    }, "likes", "medias", "user"])->where("id",$request->post_id)->first();
 
+	    $liked_by_me = $post->likes
+		    ->map(function ($like){ return $like->user_id; })
+		    ->search(function ($user_id){
+			    return Auth::user()->id == $user_id;
+		    }, $strict = true);
+	    $post["liked_by_me"] = boolval($liked_by_me);
+
 	    return [
 			"status" => "success",
 	        "post" => $post
@@ -92,7 +99,15 @@ class LikeController extends Controller
 
 	    $post = Post::with(["comments" => function($query){
 		    $query->with(["user"]);
-	    }, "likes", "medias", "user"])->where("id",$request->post_id)->first();
+	    }, "likes", "medias", "user"])->where("id", $request->post_id)->first();
+
+	    $liked_by_me = $post->likes
+		    ->map(function ($like){ return $like->user_id; })
+		    ->search(function ($user_id){
+			    return Auth::user()->id == $user_id;
+		    }, $strict = true);
+	    $post["liked_by_me"] = boolval($liked_by_me);
+
 
 	    return [
 			"status" => "success",

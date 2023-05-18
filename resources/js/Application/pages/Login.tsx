@@ -2,6 +2,7 @@ import {useRef} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Login } from "../utils/auth";
+import  "../../../css/login.css";
 
 export default function login() {
 	const navigate = useNavigate();
@@ -27,15 +28,25 @@ export default function login() {
 	}
 	return (
 		<>
-			<div className="container">
-				<div className="card">
+			<div id="login-page-container">
+				<div id="login-page-card">
+					<h3 style={{ textAlign: "center" }}>Login</h3>
 					<form onSubmit={login}>
-						<label htmlFor="email">Email</label>
-						<input ref={email} type="text" id="email" name="email" />
-						<label htmlFor="password">Password</label>
-						<input ref={password} type="text" id="password" name="password" />
-						<button type="submit">Login</button>
+						<div className="form-group">
+							<label htmlFor="email">Email</label>
+							<input ref={email} type="text" id="email" name="email" />
+						</div>
+						<div className="form-group">
+							<label htmlFor="password">Password</label>
+							<input ref={password} type="password" id="password" name="password" />
+						</div>
+						<div className="form-group">
+							<button type="submit">Login</button>
+						</div>
 					</form>
+					<br/><br/> <hr id="separator"/>
+					<h3 style={{ textAlign: "center" }}>Register</h3>
+					<button onClick={() => navigate("/register")} id="register-button">Register</button>
 				</div>
 			</div>
 		</>

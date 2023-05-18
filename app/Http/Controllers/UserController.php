@@ -11,7 +11,7 @@ class UserController extends Controller
 	{
 		$user = User::with([
 			"posts" => function($query) {
-				$query->with(["comments", "likes", "medias"]);
+				$query->with(["user", "comments.user", "likes", "medias"]);
 			}
 		])->where("id",\request("id"))->first();
 		$comment_count = $user->posts->reduce(function ($total, $post){

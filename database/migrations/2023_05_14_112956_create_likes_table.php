@@ -19,11 +19,13 @@ return new class extends Migration
 
 			$table->foreign("user_id")
 				->references("id")
-				->on("users");
+				->on("users")
+				->cascadeOnDelete();
 
 			$table->foreign("post_id")
 				->references("id")
-				->on("posts");
+				->on("posts")
+				->cascadeOnDelete();
         });
     }
 

@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
+use App\Http\Requests\DeletePostRequest;
+use App\Models\Media;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
@@ -29,6 +34,7 @@ class PostController extends Controller
 	        "medias"])
 	        ->skip($offset)
 	        ->take(15)
+	        ->orderBy('created_at', 'DESC')
 	        ->get();
 
 		if ( Auth::check() ) {
@@ -60,9 +66,39 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
-        //
+		$post = Post::create([
+			"content" => $request->content || "",
+			"user_id" => Auth::user()->id
+		]);
+		for($i=1; $i<=5; $i++)
+		{
+			if ( $img = $request->file("img" . $i) )
+			{
+				$mediaName = Str::uuid() .".". $img->getClientOriginalExtension();
+				$image = Image::make($img);
+
+				// Calculate the desired width based on the ratio
+				$width = (int)($image->height() * (6 / 13));
+
+				// Resize the image while maintaining the ratio
+				$image->fit($width, $image->height(), function ($constraint) {
+					$constraint->upsize();
+				});
+
+				$image->save("img/post/" . $mediaName, 10);
+				Media::create([
+					"path" => $mediaName,
+					"type" => explode("/", $image->mime())[0],
+					"post_id" => $post->id
+				]);
+			}
+        }
+		return [
+			"status" => "success",
+			"post" => $post
+		];
     }
 
     /**
@@ -90,10 +126,29 @@ class PostController extends Controller
     }
 
     /**
+     *
      * Remove the specified resource from storage.
+     *
      */
-    public function destroy(Post $post)
+    public function destroy(DeletePostRequest $request)
     {
-        //
+        if ( $post = Post::find($request->post_id) )
+		{
+			if ( $post->user_id == Auth::user()->id )
+			{
+				$post->delete();
+			}
+			else
+			{
+				return [
+					"status" => "failed",
+					"message" => "unauthorized"
+				];
+			}
+        }
+		return [
+			"status" => "success",
+			"posts" => Post::with(["comments", "likes", "medias"])->where("user_id", Auth::user()->id)->get()
+		];
     }
 }
