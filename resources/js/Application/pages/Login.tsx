@@ -18,7 +18,7 @@ export default function login() {
 				})
 				.then(function (response) {
 					if ( Login() ) {
-						navigate("/");
+						navigate("/profile");
 					}
 				})
 				.catch(function (error) {
@@ -41,7 +41,7 @@ export default function login() {
 							<input ref={password} type="password" id="password" name="password" />
 						</div>
 						<div className="form-group">
-							<button type="submit">Login</button>
+							<button type="submit" style={{ padding: "10px 20px" }}>Login</button>
 						</div>
 					</form>
 					<br/><br/> <hr id="separator"/>

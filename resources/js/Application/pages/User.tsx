@@ -54,7 +54,7 @@ export default function User() {
 						user?.posts.map((post, i)=>{
 							return (
 								<div onClick={()=>{ showPostModal(); setCurrentPost(post);  }} id="user-page-container-post-posts-item" key={i}>
-									<img src={"/img/post/"+post.medias[0].path} alt=""/>
+									<img src={"/img/post/" + post.medias[0].path} alt=""/>
 								</div>
 							)
 						})

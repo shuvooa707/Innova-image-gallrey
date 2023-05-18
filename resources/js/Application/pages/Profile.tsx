@@ -1,10 +1,12 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import "../../../css/user-page-style.css";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import "../../../css/profile.css"
+import ShowPostContext from "../utils/showPostContext";
 
 export default function User() {
+	const navigate = useNavigate();
 	let params = useParams();
 	const [profile, setProfile] = useState();
 	const [comment_count, setCommentCount] = useState(0);
@@ -31,14 +33,30 @@ export default function User() {
 					setPosts(response.data.profile.posts);
 				})
 		});
+		window.addEventListener("NEW_COMMENT_CREATED", function (){
+			axios.get("/api/profile")
+				.then(response=>{
+					setProfile(response.data.profile)
+					setCommentCount(response.data.comment_count);
+					setLikeCount(response.data.like_count);
+					setPosts(response.data.profile.posts);
+				})
+		});
 	},[]);
+
 
 	const deletePost = (post_id) => {
 		axios.post("/api/posts/destroy", { "post_id": post_id })
 			.then(response=>{
-				setPosts(response.data.posts);
+				setProfile(response.data.profile)
+				setCommentCount(response.data.comment_count);
+				setLikeCount(response.data.like_count);
+				setPosts(response.data.profile.posts);
 			})
 	}
+
+
+	const { showPostModal, setCurrentPost } = useContext(ShowPostContext);
 
 	return (
 		<div id="user-page-container">
@@ -62,7 +80,12 @@ export default function User() {
 				</div>
 			</div>
 			<div id="user-page-container-post">
-				<h4 style={{ textAlign: "center" }}>Posts</h4>
+				<div style={{ textAlign: "center" }}>
+					<h4 style={{ textAlign: "center" }}>
+						Posts
+						<i className="fa-solid fa-photo-film ml-2"></i>
+					</h4>
+				</div>
 				<div id="user-page-container-post-posts">
 					{
 						posts.map((post, i)=>{
@@ -71,7 +94,7 @@ export default function User() {
 									<span onClick={()=> deletePost(post.id) } id="user-page-container-post-posts-item-delete" title="Delete Post">
 										<i className="fa-solid fa-trash"></i>
 									</span>
-									<img src={"/img/post/"+post?.medias[0].path} alt=""/>
+									<img onClick={()=>{ showPostModal(); setCurrentPost(post);  }} src={"/img/post/"+post?.medias[0].path} alt=""/>
 								</div>
 							)
 						})

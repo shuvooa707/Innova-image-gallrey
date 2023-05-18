@@ -32,6 +32,8 @@ export default function CreatePost({setShowCreatePostModal}) {
 		imageInput.value = "";
 	}
 
+	const content = useRef();
+
 	const img1 = useRef();
 	const img2 = useRef();
 	const img3 = useRef();
@@ -42,6 +44,9 @@ export default function CreatePost({setShowCreatePostModal}) {
 	const createPost = () => {
 		let payload = new FormData();
 
+		if ( content.current.value.length > 3 ) {
+			payload.append("content", content.current.value);
+		}
 		if (img1.current.files.length) payload.append("img1", img1.current.files[0]);
 		if (img2.current.files.length) payload.append("img2", img2.current.files[0]);
 		if (img3.current.files.length) payload.append("img3", img3.current.files[0]);
@@ -119,7 +124,7 @@ export default function CreatePost({setShowCreatePostModal}) {
 						</div>
 					</div>
 					<div id="create-post-body-input-content">
-						<textarea name="" placeholder="Write Post Description...(max 200 words)" rows={10}
+						<textarea ref={content} name="" placeholder="Write Post Description...(max 200 words)" rows={10}
 								  id="create-post-body-input-content">
 						</textarea>
 					</div>

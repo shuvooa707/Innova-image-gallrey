@@ -71,10 +71,9 @@ body {
 	font-size: 14px;
 	line-height: 30px;
 	cursor: pointer;
+	display: block;
 }
-#navmenu .item a {
-	color: #1a1a1a;
-}
+
 
 #create-post-button {
 	background-color: transparent;
@@ -213,6 +212,15 @@ body {
 	color: white;
 	border: none;
 	border-radius: 5px;
+	transition: all .1s linear!important;
+}
+.add-comment-container button:hover {
+	box-shadow: 1px 1px 10px #ccc;
+	transition: all .1s linear!important;
+}
+.add-comment-container button:active {
+	box-shadow: 0px 0px 0px transparent;
+	transition: all .1s linear!important;
 }
 .comment {
 	text-align: justify;
@@ -226,6 +234,7 @@ body {
 	display: block;
 	float: left;
 	width: 100%;
+	box-sizing: border-box;
 }
 .comment-content {
 	text-align: justify;
@@ -405,4 +414,24 @@ textarea {
 #showpost-comment-user #user-name {
 	margin: 5px;
 	font-size: .6rem;
+}
+
+
+.mx-2 {
+	margin: 0px .7em;
+}
+.mx-1 {
+	margin: 0px .3em;
+}
+.ml-1 {
+	margin-left: .3em;
+}
+.ml-2 {
+	margin-left: .7em;
+}
+.mr-1 {
+	margin-left: .3em;
+}
+.mr-2 {
+	margin-left: .7em;
 }

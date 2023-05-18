@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/{any}', function () {
-    return view('application');
-})->where('any', '.*');
+//Route::get('/{any}', function () {
+//    return view('application');
+//})->where('any', '.*');
 
 
 Route::get("/delete-empty-posts", function (){
@@ -26,4 +26,8 @@ Route::get("/delete-empty-posts", function (){
 				$post->delete();
 			}
 		});
+});
+
+Route::get("/flush", function (){
+	dd(cookie());
 });

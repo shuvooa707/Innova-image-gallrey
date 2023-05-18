@@ -34,9 +34,7 @@ class LikeController extends Controller
 			];
 		}
 
-	    $post = Post::with(["comments" => function($query){
-			$query->with(["user"]);
-	    }, "likes", "medias", "user"])->where("id",$request->post_id)->first();
+	    $post = Post::with(["comments.user", "likes", "medias", "user"])->where("id",$request->post_id)->first();
 
 	    $liked_by_me = $post->likes
 		    ->map(function ($like){ return $like->user_id; })

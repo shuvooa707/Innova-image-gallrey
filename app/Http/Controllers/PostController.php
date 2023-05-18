@@ -6,8 +6,10 @@ use App\Http\Requests\CreatePostRequest;
 use App\Http\Requests\DeletePostRequest;
 use App\Models\Media;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -26,12 +28,7 @@ class PostController extends Controller
 		{
 			$offset = $request->offset;
 		}
-        $posts = Post::with([
-			"user",
-	        "comments" => function($query){
-		        $query->with(["user"]);
-            },
-	        "medias"])
+        $posts = Post::with(["user", "comments.user", "medias"])
 	        ->skip($offset)
 	        ->take(15)
 	        ->orderBy('created_at', 'DESC')
@@ -68,10 +65,16 @@ class PostController extends Controller
      */
     public function store(CreatePostRequest $request)
     {
-		$post = Post::create([
-			"content" => $request->content || "",
-			"user_id" => Auth::user()->id
-		]);
+		if ( strlen($request->content) > 0 ) {
+			$post = Post::create([
+				"content" => $request->content,
+				"user_id" => Auth::user()->id
+			]);
+		} else {
+			$post = Post::create([
+				"user_id" => Auth::user()->id
+			]);
+		}
 		for($i=1; $i<=5; $i++)
 		{
 			if ( $img = $request->file("img" . $i) )
@@ -146,9 +149,14 @@ class PostController extends Controller
 				];
 			}
         }
+	    $profile = User::with([
+		    "posts" => function($query) {
+			    $query->with(["user", "comments.user", "likes", "medias"])->orderBy('created_at', 'DESC');
+		    }
+	    ])->where("id", Auth::user()->id)->first();
 		return [
 			"status" => "success",
-			"posts" => Post::with(["comments", "likes", "medias"])->where("user_id", Auth::user()->id)->get()
+			"profile" => $profile
 		];
     }
 }

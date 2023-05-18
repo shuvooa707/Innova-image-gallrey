@@ -1,17 +1,20 @@
 import {NavLink, useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import isLoggedIn, { Logout } from "../utils/auth";
-import showPostContext from "../utils/showPostContext";
+import {useRef} from "react";
 
 export default function Navbar({ setShowCreatePostModal }) {
 	const navigate = useNavigate();
+	const homePageLinkElement = useRef();
 
 	const [navMenuVisible, setNavMenuVisible] = useState(false);
 	const logout = () => {
 		if ( Logout() ) {
 			navigate("/");
+			homePageLinkElement.current.click();
 		}
 	}
+
 
 	const _setShowCreatePostModal = () => {
 		if ( !isLoggedIn() ) {
@@ -23,7 +26,7 @@ export default function Navbar({ setShowCreatePostModal }) {
 
 	return (
 		<nav className={"navbar"}>
-			<NavLink to={"/"}>InnovoGram</NavLink>
+			<NavLink to={"/"} ref={homePageLinkElement}>InnovoGram</NavLink>
 			<button id={"create-post-button"} onClick={_setShowCreatePostModal}>
 				<i className="fa-sharp fa-solid fa-circle-plus" style={{ color: "#ffffff" }}></i>
 			</button>
@@ -35,31 +38,31 @@ export default function Navbar({ setShowCreatePostModal }) {
 				<div id="navmenu" onClick={()=>{setNavMenuVisible(!navMenuVisible)}}>
 					{
 						isLoggedIn() &&
-						<div className="item">
+						<NavLink to={"/profile"} className="item">
 							<i className="fa-regular fa-user"></i>
-							<NavLink to={"/profile"}>Profile</NavLink>
-						</div>
+							<span style={{marginLeft: "10px"}}>Profile</span>
+						</NavLink>
 					}
 					{
 						!isLoggedIn() &&
-						<div className="item">
+						<NavLink to={"/register"} className="item">
 							<i className="fa-solid fa-user-plus"></i>
-							<NavLink to={"/register"}>Register</NavLink>
-						</div>
+							<span style={{marginLeft: "10px"}}>Register</span>
+						</NavLink>
 					}
 					{
 						!isLoggedIn() &&
-						<div className="item">
+						<NavLink to={"/login"} className="item">
 							<i className="fa-solid fa-arrow-right-to-bracket"></i>
-							<NavLink to={"/login"}>Log In</NavLink>
-						</div>
+							<span style={{marginLeft: "10px"}}>Log In</span>
+						</NavLink>
 					}
 					{
 						isLoggedIn() &&
-						<div className="item">
+						<NavLink onClick={logout} className="item">
 							<i className="fa-solid fa-right-from-bracket fa-flip-horizontal"></i>
-							<a onClick={logout}>Log Out</a>
-						</div>
+							<span style={{marginLeft: "10px"}}>Log Out</span>
+						</NavLink>
 					}
 				</div>
 			}

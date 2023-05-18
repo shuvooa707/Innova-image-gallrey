@@ -8,7 +8,6 @@ import "../../../css/custom-alert.css"
 export default function CustomAlertModal({ message }) {
 	const { content, icon = "success" } = message
 
-	console.log(content)
 	const { showCustomAlertVisible } = useContext(ShowPostContext);
 	useEffect(()=>{
 		setTimeout(()=>{

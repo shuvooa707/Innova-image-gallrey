@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import Post from "../components/Post";
 import InfiniteScroll from "react-infinite-scroll-component";
+import {Logout} from "../utils/auth";
 
 
 
@@ -12,6 +13,9 @@ export default function Home() {
 		axios.get("/api/posts")
 			.then(response => {
 				setPosts(response.data.posts);
+				if ( !response.data.loggedin ) {
+					Logout();
+				}
 			});
 	}, []);
 
@@ -30,6 +34,8 @@ export default function Home() {
 				setPosts( [...posts, ...response.data.posts] );
 			});
 	}
+
+
 
 	return (
 		<>

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Route, Routes} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {Route, Routes, useNavigate} from "react-router-dom";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
@@ -19,7 +19,6 @@ function App() {
 	const [customAlertVisible, setCustomAlertVisible] = useState(false);
 	const [customalertdata, setCustomalertdata] = useState({ content: "Post Create", icon: "success" });
 	const [currentpost, setCurrentpost] = useState(null);
-	const [page, setPage] = useState(false);
 	const showPostModal = () => {
 		setPostVisible(!postVisible);
 	}
@@ -29,39 +28,39 @@ function App() {
 	const setCurrentPost = (post) => {
 		setCurrentpost(post);
 	}
-	const reloadPage = () => {
-		setPage(!page);
-	}
+	const navigate = useNavigate();
+
 
 	return (
 		<ShowPostContext.Provider value={{ showPostModal, setCurrentPost, showCustomAlertVisible, setCustomalertdata }}>
-			<div className="container">
+				<div className="container">
+					{
+						showCreatePostModal &&
+						<CreatePost setShowCreatePostModal={setShowCreatePostModal} />
+					}
+					<Navbar setShowCreatePostModal={()=>{ setShowCreatePostModal(!showCreatePostModal) }}/>
+					<Routes>
+						<Route element={<Home />} path={"/"}></Route>
+						<Route element={<Register />} path={"/register"}></Route>
+						<Route element={<Login />} path={"/login"}></Route>
+						<Route element={<User />} path={"/u/:id"}></Route>
+						{/*<Route element={<SliderTest />} path={"/slidertest"}></Route>*/}
+						<Route element={<ProtectedRoutes />}>
+							<Route element={<Profile />} path={"/profile"}></Route>
+						</Route>
+					</Routes>
+				</div>
 				{
-					showCreatePostModal &&
-					<CreatePost setShowCreatePostModal={setShowCreatePostModal} />
+					postVisible &&
+					<ViewPostModal Post={currentpost} />
 				}
-				<Navbar setShowCreatePostModal={()=>{ setShowCreatePostModal(!showCreatePostModal) }}/>
-				<Routes>
-					<Route element={<Home />} path={"/"}></Route>
-					<Route element={<Register />} path={"/register"}></Route>
-					<Route element={<Login />} path={"/login"}></Route>
-					<Route element={<User />} path={"/u/:id"}></Route>
-					{/*<Route element={<SliderTest />} path={"/slidertest"}></Route>*/}
-					<Route element={<ProtectedRoutes />}>
-						<Route element={<Profile />} path={"/profile"}></Route>
-					</Route>
-				</Routes>
-			</div>
-			{
-				postVisible &&
-				<ViewPostModal Post={currentpost} />
-			}
-			{
-				customAlertVisible &&
-				<CustomAlertModal message={customalertdata} />
-			}
+				{
+					customAlertVisible &&
+					<CustomAlertModal message={customalertdata} />
+				}
 		</ShowPostContext.Provider>
 	);
 }
 
 export default App;
+

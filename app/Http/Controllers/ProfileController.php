@@ -12,7 +12,8 @@ class ProfileController extends Controller
 	{
 		$profile = User::with([
 			"posts" => function($query) {
-				$query->with(["comments", "likes", "medias"]);
+				$query->with(["user", "comments.user", "likes", "medias"])
+					  ->orderBy('created_at', 'DESC');
 			}
 		])->where("id", Auth::user()->id)->first();
 

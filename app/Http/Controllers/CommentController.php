@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateCommentRequest;
 use App\Http\Requests\CreateUserRequest;
 use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,9 +37,11 @@ class CommentController extends Controller
 			"post_id" => $request->post_id,
 			"user_id" => Auth::user()->id
 		]);
+		$post = Post::with(["user", "comments.user", "likes", "medias"])->where("id", $request->post_id)->first();
 		return [
 			"status" => "success",
-			"comment" => Comment::with(["user"])->where("id", $comment->id)->first()
+			"comment" => Comment::with(["user"])->where("id", $comment->id)->first(),
+			"post" => $post
 		];
     }
 

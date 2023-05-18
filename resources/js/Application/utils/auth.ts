@@ -8,7 +8,7 @@ export default function isLoggedIn(): boolean {
 }
 
 
-export function Login(): boolean {
+export async function Login(): boolean {
 	try {
 		Cookies.set("innovagram-cookie", true, {expires: 86400, sameSite: 'lax'})
 	} catch (e) {
@@ -27,7 +27,8 @@ export async function Logout(): boolean {
 			console.log(error);
 		});
 	} catch (e) {
-		return false;
+		//return false;
+	} finally {
+		return true;
 	}
-	return true;
 }

@@ -14,7 +14,7 @@
 	box-shadow: 10px 10px 10px #aaaaaa;
 	overflow: hidden;
 	padding: 15px;
-	background: #0000ff0d;
+	background: rgba(198, 223, 255, 0.16);
 }
 
 #login-page-card .form-group {

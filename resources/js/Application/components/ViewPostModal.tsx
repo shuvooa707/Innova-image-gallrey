@@ -57,6 +57,11 @@ export default function ViewPostModal({Post}) {
 				commentInput.current.value = ``;
 				setComments([...comments, response.data.comment]);
 				document.querySelector(".comments-container").scrollBy(0,1000);
+
+				const NEW_COMMENT_CREATED = new Event("NEW_COMMENT_CREATED");
+				window.dispatchEvent(NEW_COMMENT_CREATED);
+
+				setPost(response.data.post);
 			}
 		})
 	}
