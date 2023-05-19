@@ -1,8 +1,9 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import Post from "../components/Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Logout} from "../utils/auth";
+import {useRef} from "react";
 
 
 export default function Home() {
@@ -38,29 +39,21 @@ export default function Home() {
 	}
 
 
-
 	return (
 		<>
 			<div id="posts">
-				<InfiniteScroll
-					dataLength={posts.length}
-					next={fetchMoreData}
-					hasMore={true}
-					scrollableTarget="posts"
-					loader={
-						<div style={{textAlign: "center"}}>
-							<img src="/img/loader.gif" width="50px" height="50px"/>
-						</div>
-					}
-				>
-					{
-						posts.map((post, i) => {
+				{
+					posts.map((post, i) => {
+						if ( posts.length-1 == i ){
 							return (
-								<Post post={post} key={i} />
+								<Post loadMore={fetchMoreData} lastpost={true} post={post} key={i} />
 							)
-						})
-					}
-				</InfiniteScroll>
+						}
+						return (
+							<Post lastpost={false} post={post} key={i} />
+						)
+					})
+				}
 			</div>
 		</>
 	)

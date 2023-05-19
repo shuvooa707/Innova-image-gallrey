@@ -15,11 +15,13 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "../../../css/swiper-style.css";
 import isLoggedIn from "../utils/auth";
+import {useRef} from "react";
 
 
 export default function Post(props) {
 
 	const navigate = useNavigate();
+	const [isLastPost, setIsLastPost] = useState(props.lastpost);
 
 	const [currentpost, setPost] = useState(props.post);
 	const {
@@ -28,14 +30,11 @@ export default function Post(props) {
 		medias,
 		user,
 		comments,
-		liked_by_me
 	} = props.post;
+	const { loadMore } = props;
 
 	const [totallikes, setTotallikes] = useState(props.post.totallikes);
 	const [liked, setLiked] = useState(props.post.liked_by_me);
-	// useEffect(()=>{
-	// 	setLiked(liked_by_me);
-	// },[]);
 
 	const likepost = () => {
 		if ( !isLoggedIn() ) {
@@ -64,12 +63,31 @@ export default function Post(props) {
 		});
 	}
 
+	const postElement = useRef();
+	useEffect(() => {
+		if ( isLastPost ) {
+			postElement.current.classList.add("last-element");
+			let target = postElement.current;
+			let callback = (entries, observer) => {
+				entries.forEach((entry) => {
+					if ( entry.isIntersecting ) {
+						observer.disconnect();
+						loadMore();
+					}
+				});
+			};
+
+			let observer = new IntersectionObserver(callback,  { threshold: 1 });
+			observer.observe(target);
+		}
+	},[]);
+
 
 	const { showPostModal, setCurrentPost } = useContext(ShowPostContext);
 
 	return (
 		<>
-			<div className="post">
+			<div ref={postElement} className="post">
 				<div className="posted-by-container">
 					<div className="posted-by-image">
 						<img src={"/img/user/" + user.image} alt=""/>
