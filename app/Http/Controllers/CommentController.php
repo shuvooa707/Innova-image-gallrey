@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCommentRequest;
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\DeleteCommentRequest;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -72,8 +73,9 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Comment $comment)
+    public function destroy(DeleteCommentRequest $request)
     {
-        //
+		$comment = Comment::with(["user"])->where("", $request->comment_id)->first();
+
     }
 }

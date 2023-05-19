@@ -281,6 +281,18 @@ body {
 .commenter {
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
+}
+.commenter #first {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+}
+.commenter #menu-button-container {
+	cursor: pointer;
+}
+.commenter #menu-button-container i{
+
 }
 
 .commenter-image img {

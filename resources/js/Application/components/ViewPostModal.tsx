@@ -76,6 +76,10 @@ export default function ViewPostModal({Post}) {
 		})
 	}
 
+	const deleteComment = (comment) => {
+
+	}
+
 	return (
 		<div id="showpost-container">
 			<div id="showpost-close" onClick={showPostModal}>
@@ -139,21 +143,26 @@ export default function ViewPostModal({Post}) {
 									comments.map((comment, i) => {
 										return (
 											<div className="comment" key={i}>
-												<Link to={"/u/" + comment.user.id} onClick={showPostModal}>
-													<div className="commenter">
-														<div className="commenter-image">
-															<img src={"/img/user/" + comment.user.image} alt=""/>
+												<div className="commenter">
+													<Link to={"/u/" + comment.user.id} onClick={showPostModal}>
+														<div id="first">
+															<div className="commenter-image">
+																<img src={"/img/user/" + comment.user.image} alt=""/>
+															</div>
+															<div className="commenter-name">
+																{comment.user.name}
+															</div>
 														</div>
-														<div className="commenter-name">
-															{comment.user.name}
-														</div>
+													</Link>
+													<div id="menu-button-container">
+														{
+															comment.commented_by_me &&
+															<i className="fas fa-trash-alt" onClick={()=>deleteComment(comment)}></i>
+														}
 													</div>
-												</Link>
+												</div>
 												<div className="comment-content">
 													{comment.content}
-												</div>
-												<div>
-													<i className="fa-solid fa-ellipsis"></i>
 												</div>
 											</div>
 										)
