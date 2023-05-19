@@ -26,7 +26,6 @@ export default function Post(props) {
 	const [currentpost, setPost] = useState(props.post);
 	const {
 		id,
-		content,
 		medias,
 		user,
 		comments,
@@ -71,6 +70,8 @@ export default function Post(props) {
 			let callback = (entries, observer) => {
 				entries.forEach((entry) => {
 					if ( entry.isIntersecting ) {
+						[...document.querySelectorAll(".last-element")]
+							.forEach(e=> e.classList.remove("last-element"));
 						observer.disconnect();
 						loadMore();
 					}

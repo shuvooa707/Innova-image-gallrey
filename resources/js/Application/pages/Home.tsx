@@ -44,7 +44,7 @@ export default function Home() {
 			<div id="posts">
 				{
 					posts.map((post, i) => {
-						if ( posts.length-1 == i ){
+						if ( posts.length-5 < i ){
 							return (
 								<Post loadMore={fetchMoreData} lastpost={true} post={post} key={i} />
 							)
