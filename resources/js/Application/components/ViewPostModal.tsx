@@ -25,6 +25,7 @@ export default function ViewPostModal({Post}) {
 	const likepost = () => {
 		if ( !isLoggedIn() ) {
 			navigate("/login");
+			showPostModal();
 			return
 		}
 		axios.post("/api/like", {
@@ -33,14 +34,14 @@ export default function ViewPostModal({Post}) {
 			setPost(response.data.post);
 			setLiked(response.data.post.liked_by_me);
 
-			// LIKED
-			const LIKED = new Event("LIKED");
-			window.dispatchEvent(LIKED);
+			// EMIT LIKED EVENT
+			window.dispatchEvent( new Event("LIKED") );
 		});
 	}
 	const unlikepost = () => {
 		if ( !isLoggedIn() ) {
 			navigate("/login");
+			showPostModal();
 			return;
 		}
 		axios.post("/api/unlike", {
@@ -54,8 +55,12 @@ export default function ViewPostModal({Post}) {
 			window.dispatchEvent(UNLIKED);
 		});
 	}
-
 	const makeComment = () => {
+		if ( !isLoggedIn() ) {
+			navigate("/login");
+			showPostModal();
+			return
+		}
 		if ( commentInput.current.value.length < 1 ) return;
 		axios.post("/api/comments/create", {
 			"content": commentInput.current.value,

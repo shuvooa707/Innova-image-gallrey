@@ -13,16 +13,40 @@ export default function User() {
 	const id = params.id;
 	useEffect(()=>{
 		axios.get("/api/user/" + id)
-			.then(response=>{
-				console.log(response.data.user)
-				let data = response.data;
+			.then( response => {
+				let { data } = response;
 				if ( data.status == "success" ) {
 					setUser(data.user);
 					setCommentCount(data.comment_count);
 					setLikeCount(data.like_count);
 				}
-			})
-	},[])
+			});
+
+		window.addEventListener("LIKED", function (){
+			axios.get("/api/user/" + id)
+				.then( response => {
+					let { data } = response;
+					if ( data.status == "success" ) {
+						console.log(data)
+						setUser(data.user);
+						setCommentCount(data.comment_count);
+						setLikeCount(data.like_count);
+					}
+				})
+		});
+		window.addEventListener("UNLIKED", function (){
+			axios.get("/api/user/" + id)
+				.then( response => {
+					let { data } = response;
+					if ( data.status == "success" ) {
+						setUser(data.user);
+						setCommentCount(data.comment_count);
+						setLikeCount(data.like_count);
+					}
+				})
+		});
+	},[]);
+
 
 	const { showPostModal, setCurrentPost } = useContext(ShowPostContext);
 

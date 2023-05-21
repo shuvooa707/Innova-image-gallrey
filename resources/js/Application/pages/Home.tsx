@@ -25,6 +25,12 @@ export default function Home() {
 		window.addEventListener("NEW_COMMENT_CREATED", function (event){
 			updateCommentedPost(event.detail.post)
 		});
+		window.addEventListener("LOGGED_OUT", function (event){
+			axios.get("/api/posts")
+				.then(response => {
+					setPosts(response.data.posts);
+				});
+		});
 	},[]);
 
 	const updateCommentedPost = (newPost) => {

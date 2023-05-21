@@ -35,6 +35,8 @@ export default function Post(props) {
 	const [totallikes, setTotallikes] = useState(props.post.totallikes);
 	const [liked, setLiked] = useState(props.post.liked_by_me);
 
+
+
 	const likepost = () => {
 		if ( !isLoggedIn() ) {
 			navigate("/login");

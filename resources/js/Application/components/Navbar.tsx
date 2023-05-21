@@ -3,24 +3,21 @@ import {useEffect, useState} from "react";
 import isLoggedIn, { Logout } from "../utils/auth";
 import {useRef} from "react";
 
-export default function Navbar({ setShowCreatePostModal }) {
+export default  function Navbar({ setShowCreatePostModal }) {
 	const navigate = useNavigate();
 	const homePageLinkElement = useRef();
 
 	const [navMenuVisible, setNavMenuVisible] = useState(false);
-	const logout = () => {
-		if ( Logout() ) {
-			// navigate("/");
-			// homePageLinkElement.current.click();
-			// window.location = "/";
+	const logout = async () => {
 
-			// const LOGGED_OUT = new Event("LOGGED_OUT");
-			// window.dispatchEvent(LOGGED_OUT);
-			setTimeout(()=>{
-				console.log("LOGGED_OUT");
-				navigate("/");
-			},0);
-		}
+		let p = await Logout();
+		setTimeout(() => {
+			navigate("/");
+		},0);
+		const LOGGED_OUT = new Event("LOGGED_OUT");
+		window.dispatchEvent(LOGGED_OUT);
+
+		return p;
 	}
 
 

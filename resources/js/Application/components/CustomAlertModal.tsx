@@ -1,8 +1,5 @@
 import {useContext, useEffect, useState} from "react";
 import ShowPostContext from "../utils/showPostContext";
-import {Swiper, SwiperSlide} from "swiper/react";
-import {Navigation} from "swiper";
-// import required modules
 import "../../../css/custom-alert.css"
 
 export default function CustomAlertModal({ message }) {

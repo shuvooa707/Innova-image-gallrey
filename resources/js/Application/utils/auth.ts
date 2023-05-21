@@ -17,18 +17,12 @@ export async function Login(): boolean {
 	return true;
 }
 
-export async function Logout(): boolean {
-	try {
-		axios.post('/api/logout')
+export async function Logout() {
+	return await axios.post('/api/logout')
 		.then(function (response) {
 			Cookies.remove("innovagram-cookie");
 		})
 		.catch(function (error) {
 			console.log(error);
 		});
-	} catch (e) {
-		//return false;
-	} finally {
-		return true;
-	}
 }
